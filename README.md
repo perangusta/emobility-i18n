@@ -2,7 +2,7 @@
 
 This gem provides global scope for I18n keys with fallback if scoped key does not exist. 
 
-You can think of it as reversed `I18n::Backedn::Cascade` as it's removing parts from the begining of the key.
+You can think of it as reversed `I18n::Backend::Cascade` as it's removing parts from the begining of the key.
 
 ## Installation
 
