@@ -22,7 +22,7 @@ Or install it yourself as:
 
 Create initializer file `i18n.rb` to introduce `GlobalScope` to `i18n`
 
-    I18n::Backend::Simple.send(:include, I18n::Backend::GlobalScope)
+    I18n::Backend::Simple.send(:include, I18nGlobalScope::Backend::GlobalScope)
 
 After that you need to set `global_scope` just as you would set `default_locale`
  
