@@ -10,6 +10,11 @@ The `GlobalScope` module allows for i18n keys with fallback if scoped key does n
 
 You can think of this as a reversed version of `I18n::Backend::Cascade` as it's removing parts from the begining of the key.
 
+
+### Object#with_i18n_options
+
+This is just an alias to Rails' `[Object#with_options](http://apidock.com/rails/Object/with_options)`. The alias is just there to better carry the intent.
+
 ## Installation
 
 Add this line to your application's Gemfile:
