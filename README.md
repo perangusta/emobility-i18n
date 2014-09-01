@@ -100,6 +100,14 @@ t('some_text_html') # => will render the translation at the given key as Markdow
 t('some_key.html')  # => same
 ```
 
+### One Backend to Rule Them All
+
+Use the `I18n::Backend::EMobility` backend to include all of the aforementioned features. It's just an extension of the `Simple` backend that ships with i18n.
+
+```
+I18n.backend = I18n::Backend::EMobility.new
+```
+
 ## Contributing
 
 1. Fork it ( http://github.com/<my-github-username>/emobility-i18n/fork )
