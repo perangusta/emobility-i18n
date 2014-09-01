@@ -4,16 +4,41 @@ This gem provides some i18n functionality for the eMobility project.
 
 ## Features
 
+### Object#with_i18n_options
+
+This is just an alias to Rails' `[Object#with_options](http://apidock.com/rails/Object/with_options)`. The alias is just there to better carry the intent.
+
 ### Global Scope
 
 The `GlobalScope` module allows for i18n keys with fallback if scoped key does not exist.
 
 You can think of this as a reversed version of `I18n::Backend::Cascade` as it's removing parts from the begining of the key.
 
+### Key Prefix
 
-### Object#with_i18n_options
+The `KeyPrefix` module allows to pass a key prefix to i18n lookups. We use this together with `GlobalScope` to facilitate proper cascades without deeply nesting translations while still allowing for easy scoping/grouping translations for developers:
 
-This is just an alias to Rails' `[Object#with_options](http://apidock.com/rails/Object/with_options)`. The alias is just there to better carry the intent.
+Consider this:
+
+```
+# classic approach
+t('admin.some-brand.users.form.create', cascade: true) # resulting cascade: admin.some-brand.users.form.create, admin.some-brand.users.create, admin.some-brand.create, admin.create, create
+
+# manual key prefix
+t('admin.some-brand.users_form_create', cascade: true) # resulting cascade: admin.some-brand.users_form_create, admin.users_form_create, users_form_create
+
+# with the module
+t('admin.some-brand.create', key_prefix: 'users_form', cascade: true) # resulting cascade: same as above
+```
+
+The benefit becomes visible when you're using our `with_18n_options`-based approach in views:
+
+```
+/ assuming I18n.global_scope = 'some-brand' was set in some controller
+- with_i18n_options(scope: 'admin', key_prefix: 'users_form') do |i18n|
+  / this automatically does the whole cascade from above
+  = f.submit i18n.t(:create)
+```
 
 ## Installation
 
