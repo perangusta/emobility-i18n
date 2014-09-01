@@ -1,7 +1,7 @@
 require 'bundler/setup'
 Bundler.setup
 
-require 'i18n_global_scope'
+require 'emobility-i18n'
 require 'helpers'
 
 RSpec.configure do |config|

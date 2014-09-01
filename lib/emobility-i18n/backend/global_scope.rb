@@ -1,4 +1,4 @@
-module I18nGlobalScope
+module I18n
   module Backend
     module GlobalScope
       def lookup(locale, key, scope = [], options = {})

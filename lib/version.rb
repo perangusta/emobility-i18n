@@ -1,3 +1,3 @@
-module I18nGlobalScope
-  VERSION = "0.0.2"
+module EMobilityI18n
+  VERSION = '0.0.1'
 end

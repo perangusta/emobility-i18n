@@ -1,4 +1,4 @@
-Copyright (c) 2014 Adrian Serafin
+Copyright (c) 2014 TMH Operations GmbH
 
 MIT License
 

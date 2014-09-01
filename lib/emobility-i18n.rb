@@ -24,4 +24,4 @@ module I18n
   }
 end
 
-require 'i18n_global_scope/backend/global_scope'
+require 'emobility-i18n/backend/global_scope'

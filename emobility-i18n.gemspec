@@ -4,11 +4,11 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "i18n_global_scope"
-  spec.version       = I18nGlobalScope::VERSION
-  spec.authors       = ["Adrian Serafin"]
-  spec.email         = ["abusiek@gmail.com"]
-  spec.summary       = %q{Global scope for i18n gem.}
+  spec.name          = "emobility-i18n"
+  spec.version       = EMobilityI18n::VERSION
+  spec.authors       = ["Adrian Serafin", "Clemens Kofler"]
+  spec.email         = ["abusiek@gmail.com", "clemens@railway.at"]
+  spec.summary       = %q{i18n tools for the eMobility project.}
   spec.description   = %q{}
   spec.homepage      = ""
   spec.license       = "MIT"

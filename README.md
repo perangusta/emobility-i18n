@@ -1,42 +1,48 @@
-# I18nGlobalScope
+# EMobility i18n
 
-This gem provides global scope for I18n keys with fallback if scoped key does not exist. 
+This gem provides some i18n functionality for the eMobility project.
 
-You can think of it as reversed `I18n::Backend::Cascade` as it's removing parts from the begining of the key.
+## Features
+
+### Global Scope
+
+The `GlobalScope` module allows for i18n keys with fallback if scoped key does not exist.
+
+You can think of this as a reversed version of `I18n::Backend::Cascade` as it's removing parts from the begining of the key.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'i18n_global_scope', require: true
+    gem 'emobility-i18n', github: 'mobilityhouse/emobility-i18n'
 
 And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install i18n_global_scope
-
 ## Usage
 
-Create initializer file `i18n.rb` to introduce `GlobalScope` to `i18n`
+### Global Scope
 
-    I18n::Backend::Simple.send(:include, I18nGlobalScope::Backend::GlobalScope)
+Create an initializer file `config/initializers/i18n.rb` and include the `GlobalScope` module into your i18n backend:
 
-After that you need to set `global_scope` just as you would set `default_locale`
+    I18n::Backend::Simple.send(:include, I18n::Backend::GlobalScope)
+
+After that you need to set `global_scope` just as you would set `default_locale`:
  
     I18n.global_scope = 'some_scope'
     
-If scoping by subdomain is the use case you can put something like this in the `application_controller.rb`
+If you want to scope by subdomain, you can put something like this in `app/controllers/application_controller.rb`
 
     class ApplicationController
       before_filter :set_global_scope
     
       private
+
       def set_global_scope
         I18n.global_scope = get_subdomain_from_url_here
       end
+
     end
 
 ## Contributing
