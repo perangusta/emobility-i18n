@@ -42,7 +42,7 @@ And then execute:
 
 ### with_i18n_options
 
-```
+``` slim
 - with_i18n_options(scope: 'admin.users.form') do |i18n|
   / This will set the submit button label to the translation at 'admin.users.form.create'
   = f.submit i18n.t(:create)
@@ -52,43 +52,57 @@ And then execute:
 
 Create an initializer file `config/initializers/i18n.rb` and include the `GlobalScope` module into your i18n backend:
 
-    I18n::Backend::Simple.send(:include, I18n::Backend::GlobalScope)
+``` ruby
+I18n::Backend::Simple.send(:include, I18n::Backend::GlobalScope)
+```
 
 After that you need to set `global_scope` just as you would set `default_locale`:
  
-    I18n.global_scope = 'some_scope'
+``` ruby
+I18n.global_scope = 'some_scope'
+```
     
 If you want to scope by subdomain, you can put something like this in `app/controllers/application_controller.rb`:
 
-    class ApplicationController
-      before_filter :set_global_scope
-    
-      private
+``` ruby
+class ApplicationController
+  before_filter :set_global_scope
 
-      def set_global_scope
-        I18n.global_scope = get_subdomain_from_url_here
-      end
-    end
+  private
+
+  def set_global_scope
+    I18n.global_scope = get_subdomain_from_url_here
+  end
+end
+```
 
 Note: If you use a scope containing other scopes as global scope, the whole scope gets chopped off!
 
-    I18n.global_scope = 'some.scope'
-    t('foo') # => looks for 'some.scope.foo' and then 'foo' but never 'some.foo'
+``` ruby
+I18n.global_scope = 'some.scope'
+t('foo') # => looks for 'some.scope.foo' and then 'foo' but never 'some.foo'
+```
 
 ### Global Scope Prefix
 
 Create an initializer file `config/initializers/i18n.rb` and include the `GlobalScopePrefix` module into your i18n backend:
 
-    I18n::Backend::Simple.send(:include, I18n::Backend::GlobalScopePrefix)
+``` ruby
+I18n::Backend::Simple.send(:include, I18n::Backend::GlobalScopePrefix)
+```
 
 After that you need to set `global_scope_prefix` just as you would set `default_locale`:
- 
-    I18n.global_scope_prefix = 'some_scope' # this can also be a scope containing scopes, e.g. "some.scope"
+
+``` ruby
+I18n.global_scope_prefix = 'some_scope' # this can also be a scope containing scopes, e.g. "some.scope"
+```
 
 Subsequent calls to `I18n.translate` will prepend the scope to every call:
 
-    t('foo')                # => returns the translation at 'some.scope.foo'
-    t('foo', cascade: true) # => works as expected and looks for 'some.scope.foo', 'some.foo' and 'foo' (in that order)
+``` ruby
+t('foo')                # => returns the translation at 'some.scope.foo'
+t('foo', cascade: true) # => works as expected and looks for 'some.scope.foo', 'some.foo' and 'foo' (in that order)
+```
 
 You can use this to scope by subdomain like you can use `global_scope` (see above).
 
@@ -96,7 +110,7 @@ Caveat: If you want to use this with I18n's `Cascade` module, note that **module
 
 ### Key Prefix
 
-```
+``` ruby
 I18n::Backend::Simple.send(:include, I18n::Backend::KeyPrefix)
 
 # classic approach
@@ -111,7 +125,7 @@ t('admin.some-brand.create', key_prefix: 'users_form', cascade: true) # resultin
 
 The benefit becomes visible when you're using our `with_18n_options`-based approach in views:
 
-```
+``` slim
 / assuming I18n.global_scope = 'some-brand' was set in some controller
 - with_i18n_options(scope: 'admin', key_prefix: 'users_form') do |i18n|
   / this automatically does the whole cascade from above
@@ -120,7 +134,7 @@ The benefit becomes visible when you're using our `with_18n_options`-based appro
 
 ### Markdown
 
-```
+``` ruby
 I18n::Backend::Simple.send(:include, I18n::Backend::Markdown)
 
 t('some_text_html') # => will render the translation at the given key as Markdown
@@ -131,7 +145,7 @@ t('some_key.html')  # => same
 
 Use the `I18n::Backend::EMobility` backend to included **all of the aforementioned features except GlobalScope as well as the Cascade module**. It's just an extension of the `Simple` backend that ships with i18n with the features we need in our application.
 
-```
+``` ruby
 I18n.backend = I18n::Backend::EMobility.new
 ```
 
