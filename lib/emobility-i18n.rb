@@ -1,5 +1,6 @@
 require 'i18n'
 
+require 'emobility-i18n/default_options'
 require 'emobility-i18n/with_i18n_options'
 
 require 'emobility-i18n/backend/global_scope'

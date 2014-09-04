@@ -3,7 +3,7 @@
 # NoMethodError.
 
 class Object
-  def with_i18n_options(*args, &block)
-    with_options(*args, &block)
+  def with_i18n_options(options, &block)
+    with_options((I18n.default_options || {}).merge(options), &block)
   end
 end
