@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 describe I18n::Backend::GlobalScope do
-  class Backend < I18n::Backend::Simple
+  class GlobalScopeBackend < I18n::Backend::Simple
     include I18n::Backend::GlobalScope
   end
 
   before do
-    I18n.backend = Backend.new
+    I18n.backend = GlobalScopeBackend.new
   end
 
   context 'when global scope is not given' do
@@ -39,7 +39,7 @@ describe I18n::Backend::GlobalScope do
 
     context 'when both scoped and not-scoped key exist' do
       before do
-        store_translations(:en, prefix: { foo: 'prefixed_foo', bar: { baz: 'prefixed_baz' } }, foo: 'foo', bar: { baz: 'baz' })
+        store_translations(:en, global_scope => { foo: 'prefixed_foo', bar: { baz: 'prefixed_baz' } }, foo: 'foo', bar: { baz: 'baz' })
       end
 
       it 'returns translation for scoped key' do

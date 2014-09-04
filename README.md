@@ -14,6 +14,10 @@ The `GlobalScope` module allows for i18n keys with fallback if scoped key does n
 
 You can think of this as a reversed version of `I18n::Backend::Cascade` as it's removing parts from the begining of the key.
 
+### Global Scope Prefix
+
+The `GlobalScopePrefix` module is similar to the `GlobalScope` module but just prepends a scope to **every key** that gets translated without the "reverse cascade".
+
 ### Key Prefix
 
 The `KeyPrefix` module allows to pass a key prefix to i18n lookups. We use this together with `GlobalScope` to facilitate proper cascades without deeply nesting translations while still allowing for easy scoping/grouping translations for developers. See usage example below.
@@ -54,7 +58,7 @@ After that you need to set `global_scope` just as you would set `default_locale`
  
     I18n.global_scope = 'some_scope'
     
-If you want to scope by subdomain, you can put something like this in `app/controllers/application_controller.rb`
+If you want to scope by subdomain, you can put something like this in `app/controllers/application_controller.rb`:
 
     class ApplicationController
       before_filter :set_global_scope
@@ -64,10 +68,33 @@ If you want to scope by subdomain, you can put something like this in `app/contr
       def set_global_scope
         I18n.global_scope = get_subdomain_from_url_here
       end
-
     end
 
-### Key prefix
+Note: If you use a scope containing other scopes as global scope, the whole scope gets chopped off!
+
+    I18n.global_scope = 'some.scope'
+    t('foo') # => looks for 'some.scope.foo' and then 'foo' but never 'some.foo'
+
+### Global Scope Prefix
+
+Create an initializer file `config/initializers/i18n.rb` and include the `GlobalScopePrefix` module into your i18n backend:
+
+    I18n::Backend::Simple.send(:include, I18n::Backend::GlobalScopePrefix)
+
+After that you need to set `global_scope_prefix` just as you would set `default_locale`:
+ 
+    I18n.global_scope_prefix = 'some_scope' # this can also be a scope containing scopes, e.g. "some.scope"
+
+Subsequent calls to `I18n.translate` will prepend the scope to every call:
+
+    t('foo')                # => returns the translation at 'some.scope.foo'
+    t('foo', cascade: true) # => works as expected and looks for 'some.scope.foo', 'some.foo' and 'foo' (in that order)
+
+You can use this to scope by subdomain like you can use `global_scope` (see above).
+
+Caveat: If you want to use this with I18n's `Cascade` module, note that **module inclusion order matters**. See our `EMobility` backend for how to do this correctly and note that the order might be different if you're including modules separately (blame Ruby's `include` mechanism for it).
+
+### Key Prefix
 
 ```
 I18n::Backend::Simple.send(:include, I18n::Backend::KeyPrefix)
@@ -102,7 +129,7 @@ t('some_key.html')  # => same
 
 ### One Backend to Rule Them All
 
-Use the `I18n::Backend::EMobility` backend to include all of the aforementioned features. It's just an extension of the `Simple` backend that ships with i18n.
+Use the `I18n::Backend::EMobility` backend to included **all of the aforementioned features except GlobalScope as well as the Cascade module**. It's just an extension of the `Simple` backend that ships with i18n with the features we need in our application.
 
 ```
 I18n.backend = I18n::Backend::EMobility.new
