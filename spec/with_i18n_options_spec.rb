@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Object#with_i18n_options" do
   context "when Object responds to with_options" do
     before do
-      Object.class_eval { def with_options; 'foo'; end }
+      Object.class_eval { def with_options(options); 'foo'; end }
     end
 
     after do
@@ -11,7 +11,7 @@ describe "Object#with_i18n_options" do
     end
 
     it "aliases Object#with_options" do
-      expect(Object.new.with_i18n_options).to eq 'foo'
+      expect(Object.new.with_i18n_options({})).to eq 'foo'
     end
   end
 
@@ -21,7 +21,7 @@ describe "Object#with_i18n_options" do
     end
 
     it "raises a NoMethodError" do
-      expect { Object.new.with_i18n_options }.to raise_error(NoMethodError)
+      expect { Object.new.with_i18n_options({}) }.to raise_error(NoMethodError)
     end
   end
 end
