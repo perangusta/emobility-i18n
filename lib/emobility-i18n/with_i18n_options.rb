@@ -4,6 +4,6 @@
 
 class Object
   def with_i18n_options(options, &block)
-    with_options((I18n.default_options || {}).merge(options), &block)
+    with_options(options, &block)
   end
 end

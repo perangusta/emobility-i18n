@@ -9,5 +9,8 @@ module I18n
       @default_options = options
     end
 
+    def merge_with_default_options(options)
+      (default_options || {}).merge(options)
+    end
   end
 end

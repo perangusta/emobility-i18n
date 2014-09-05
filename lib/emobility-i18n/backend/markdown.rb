@@ -4,6 +4,7 @@ module I18n
   module Backend
     module Markdown
       def translate(locale, key, options = {})
+        options = I18n.merge_with_default_options(options)
         markdown_renderer = options.delete(:markdown_renderer)
         markdown_options = options.delete(:markdown_options)
 
