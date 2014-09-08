@@ -143,7 +143,7 @@ t('some_key.html')  # => same
 
 ### One Backend to Rule Them All
 
-Use the `I18n::Backend::EMobility` backend to included **all of the aforementioned features except GlobalScope as well as the Cascade module**. It's just an extension of the `Simple` backend that ships with i18n with the features we need in our application.
+Use the `I18n::Backend::EMobility` backend to included **all of the aforementioned features except GlobalScope as well as i18n's own Cascade and Fallback modules**. It's just an extension of the `Simple` backend that ships with i18n with the features we need in our application.
 
 ``` ruby
 I18n.backend = I18n::Backend::EMobility.new
