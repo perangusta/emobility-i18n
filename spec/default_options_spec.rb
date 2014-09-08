@@ -9,7 +9,7 @@ describe "default_options" do
 
     context "when options passed" do
       it "adds passed options" do
-        expect(I18n.merge_with_default_options(c: 3)).to eq({ a: 1, b: 2, c:3 })
+        expect(I18n.merge_with_default_options(c: 3)).to eq({ a: 1, b: 2, c: 3 })
       end
 
       it "overrides default_options with passed options" do
