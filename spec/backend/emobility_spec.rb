@@ -49,6 +49,17 @@ shared_examples_for 'a cascading backend' do
       expect(I18n.t('create', i18n_options)).to eq 'Create'
       expect(I18n.t('start_page_create', i18n_options)).to eq 'Create from Start Page'
     end
+
+    it "still finds scoped keys" do
+      expect(I18n.t('the_application.the_brand.name', i18n_options)).to eq 'The Brand'
+      expect(I18n.t('the_application.the_brand.start_page_heading', i18n_options)).to eq 'The Heading'
+      expect(I18n.t('the_application.title', i18n_options)).to eq 'The Application'
+      expect(I18n.t('the_application.start_page_title', i18n_options)).to eq 'The Start Page'
+    end
+
+    it "finds scoped keys outside the global scope prefix when given the proper :cascade option" do
+      expect(I18n.t('somewhere.over_the_rainbow', i18n_options.merge(cascade: { offset: 2 }))).to eq 'way up high'
+    end
   end
 
   context "with a key prefix" do
@@ -83,7 +94,10 @@ describe I18n::Backend::EMobility do
         }
       },
       create: 'Create',
-      start_page_create: 'Create from Start Page'
+      start_page_create: 'Create from Start Page',
+      somewhere: {
+        over_the_rainbow: 'way up high'
+      }
     )
 
     I18n.locale = :'en-GB'

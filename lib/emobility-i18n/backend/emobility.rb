@@ -4,7 +4,7 @@ module I18n
       include GlobalScopePrefix, KeyPrefix, Markdown, Cascade, Fallbacks
 
       def translate(locale, key, options = {})
-        options.merge!(cascade: true) unless options[:cascade] === false
+        options.merge!(cascade: true) unless options.key?(:cascade)
         super
       end
     end
