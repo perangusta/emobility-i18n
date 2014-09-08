@@ -13,7 +13,7 @@ RSpec.configure do |config|
   end
 
   config.after do
-    I18n.global_scope_prefix = nil
-    I18n.global_scope = nil
+    I18n.global_scope_prefix = nil if I18n.respond_to?(:global_scope_prefix=)
+    I18n.global_scope = nil        if I18n.respond_to?(:global_scope=)
   end
 end
