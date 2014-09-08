@@ -60,6 +60,16 @@ shared_examples_for 'a cascading backend' do
     it "finds scoped keys outside the global scope prefix when given the proper :cascade option" do
       expect(I18n.t('somewhere.over_the_rainbow', i18n_options.merge(cascade: { offset: 2 }))).to eq 'way up high'
     end
+
+    context "with a manual :scope_prefix" do
+      it "finds keys" do
+        expect(I18n.t('over_the_rainbow', i18n_options.merge(scope_prefix: 'somewhere'))).to eq 'way up high'
+      end
+
+      it "finds keys with the scope prefix manually disabled" do
+        expect(I18n.t('somewhere.over_the_rainbow', i18n_options.merge(scope_prefix: false))).to eq 'way up high'
+      end
+    end
   end
 
   context "with a key prefix" do
