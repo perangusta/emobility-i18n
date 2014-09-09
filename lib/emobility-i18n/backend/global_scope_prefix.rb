@@ -10,7 +10,7 @@ module I18n
         # If we manually pass a :scope_prefix, we use this. Otherwise we use the
         # configured global_scope_prefix.
         scope_prefix = options.key?(:scope_prefix) ? options[:scope_prefix] : I18n.global_scope_prefix
-        return super if !!scope_prefix === false
+        return super unless scope_prefix
 
         separator = options[:separator] || I18n.default_separator
         scope = I18n.normalize_keys(nil, scope, scope_prefix, separator)
