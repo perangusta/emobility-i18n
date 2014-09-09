@@ -7,10 +7,13 @@ module I18n
       end
 
       def lookup(locale, key, scope = [], options = {})
-        return super if I18n.global_scope_prefix.nil?
+        # If we manually pass a :scope_prefix, we use this. Otherwise we use the
+        # configured global_scope_prefix.
+        scope_prefix = options.key?(:scope_prefix) ? options[:scope_prefix] : I18n.global_scope_prefix
+        return super unless scope_prefix
 
         separator = options[:separator] || I18n.default_separator
-        scope = I18n.normalize_keys(nil, scope, I18n.global_scope_prefix, separator)
+        scope = I18n.normalize_keys(nil, scope, scope_prefix, separator)
 
         super
       end
