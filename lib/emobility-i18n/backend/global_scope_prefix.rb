@@ -6,14 +6,14 @@ module I18n
         I18n.extend(CoreExtension)
       end
 
-      def lookup(locale, key, scope = [], options = {})
+      def translate(locale, key, options = {})
         # If we manually pass a :scope_prefix, we use this. Otherwise we use the
         # configured global_scope_prefix.
         scope_prefix = options.key?(:scope_prefix) ? options[:scope_prefix] : I18n.global_scope_prefix
         return super unless scope_prefix
 
         separator = options[:separator] || I18n.default_separator
-        scope = I18n.normalize_keys(nil, scope, scope_prefix, separator)
+        options[:scope] = I18n.normalize_keys(nil, options[:scope], scope_prefix, separator)
 
         super
       end
