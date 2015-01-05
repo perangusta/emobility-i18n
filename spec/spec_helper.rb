@@ -7,7 +7,10 @@ require 'helpers'
 RSpec.configure do |config|
   config.include Helpers
 
+  Dir["./spec/support/**/*.rb"].sort.each { |f| require f}
+
   config.before do
+    I18n.enforce_available_locales = false
     I18n.default_locale = :en
     I18n.locale = nil
   end
