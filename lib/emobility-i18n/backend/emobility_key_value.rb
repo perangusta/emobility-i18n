@@ -1,6 +1,6 @@
 module I18n
   module Backend
-    class EMobilityKeyValue < CachedKeyValueStore
+    class EMobilityKeyValue < KeyValue
       include GlobalScopePrefix, KeyPrefix, Metadata, Markdown, Cascade, Fallbacks
 
       def translate(locale, key, options = {})
