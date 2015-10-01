@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency "i18n"
-  spec.add_runtime_dependency "redcarpet"
+  spec.add_runtime_dependency "kramdown"
   spec.add_runtime_dependency "cached_key_value_store"
   spec.add_runtime_dependency "redis"
 

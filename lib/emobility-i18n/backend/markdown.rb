@@ -1,4 +1,4 @@
-require 'redcarpet'
+require 'kramdown'
 
 module I18n
   module Backend
@@ -10,16 +10,7 @@ module I18n
         result = super(locale, key, options)
         return result unless html_safe_translation_key?(key)
 
-        markdown(markdown_renderer, markdown_options).render(result).strip
-      end
-
-      private
-
-      def markdown(markdown_renderer, markdown_options)
-        Redcarpet::Markdown.new(
-          markdown_renderer || Redcarpet::Render::HTML,
-          markdown_options || {}
-        )
+        Kramdown::Document.new(result, options).to_html.strip
       end
 
       # Copied from Rails.
