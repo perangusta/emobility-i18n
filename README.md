@@ -1,3 +1,6 @@
+# Per Angusta Fork
+This is a fork adapted for the special use of Per Angusta.
+
 # EMobility i18n
 
 This gem provides some i18n functionality for the eMobility project.
@@ -57,11 +60,11 @@ I18n::Backend::Simple.send(:include, I18n::Backend::GlobalScope)
 ```
 
 After that you need to set `global_scope` just as you would set `default_locale`:
- 
+
 ``` ruby
 I18n.global_scope = 'some_scope'
 ```
-    
+
 If you want to scope by subdomain, you can put something like this in `app/controllers/application_controller.rb`:
 
 ``` ruby
@@ -76,11 +79,18 @@ class ApplicationController
 end
 ```
 
-Note: If you use a scope containing other scopes as global scope, the whole scope gets chopped off!
+Note: If you want to use global_scope fallbacks, you have to use Array format as follows
+
+``` ruby
+I18n.global_scope = %w[some scope]
+
+t('foo') # => looks for 'some.foo' and then 'scope.foo' and finally 'foo'
+```
+You can use scopes containing other scopes within the array form of global_scope too but the whole scope gets chopped off! Same as below:
 
 ``` ruby
 I18n.global_scope = 'some.scope'
-t('foo') # => looks for 'some.scope.foo' and then 'foo' but never 'some.foo'
+t('foo') # => looks for 'some.scope.foo' and then 'foo' but never 'scope.foo' nor 'some.foo'
 ```
 
 ### Global Scope Prefix
@@ -152,7 +162,8 @@ I18n.backend = I18n::Backend::EMobility.new
 ## Contributing
 
 1. Fork it ( http://github.com/<my-github-username>/emobility-i18n/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+2. Create your feature branch (`git checkout -b feature/name_your_feature`)
+3. Run tests locally, all examples should be green (`rspec`)
+4. Commit your changes (`git commit -am 'Add some feature'`)
+6. Push to the branch (`git push origin feature/name_your_feature`)
+7. Create new Pull Request

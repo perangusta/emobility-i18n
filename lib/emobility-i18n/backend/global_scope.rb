@@ -9,18 +9,23 @@ module I18n
       def lookup(locale, key, scope = [], options = {})
         return super if I18n.global_scope.nil?
 
+        global_scopes = Array(I18n.global_scope)
         separator = options[:separator] || I18n.default_separator
-        scope = [I18n.global_scope.to_sym] + I18n.normalize_keys(nil, key, scope, separator)
-        key = (scope.slice!(-1,1) || []).join(separator)
+        result = nil
+        scope ||= []
 
-        result = super
-        unless result.nil?
-          result
-        else
+        until result || global_scopes.empty?
+          scope.unshift(global_scopes.first.to_sym)
+
+          result = super
+          next if result
+
           scope = scope.dup
           scope.shift
-          super
+          global_scopes.shift
         end
+
+        result || super
       end
 
       module ConfigExtension

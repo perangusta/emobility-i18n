@@ -4,7 +4,9 @@ describe I18n::Backend::EMobilityKeyValue do
   let(:i18n_options) { {} }
 
   before do
-    I18n.backend = described_class.new(Redis.new)
+    # I18n.backend = described_class.new(Redis.new)
+    # temporary fix of specs because of this https://github.com/guilleiguaran/fakeredis/issues/213
+    I18n.backend = described_class.new({})
 
     store_translations(:en,
                        the_application: {
