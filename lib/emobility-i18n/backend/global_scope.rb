@@ -10,9 +10,9 @@ module I18n
         return super if I18n.global_scope.nil?
 
         global_scopes = Array(I18n.global_scope)
-        separator = options[:separator] || I18n.default_separator
-        result = nil
-        scope ||= []
+        separator     = options[:separator] || I18n.default_separator
+        scope         = I18n.normalize_keys(nil, nil, scope, separator)
+        result        = nil
 
         until result || global_scopes.empty?
           scope.unshift(global_scopes.first.to_sym)
